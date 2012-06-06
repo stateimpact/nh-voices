@@ -2770,11 +2770,38 @@ footer .partnership {
   margin-left: 65px;
 }
 .profiles .profile .thumb-wrapper {
+  position: relative;
   background: #000;
+}
+.profiles .profile .thumb-wrapper .loaded,
+.profiles .profile .thumb-wrapper .progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 20px;
+}
+.profiles .profile .thumb-wrapper .loaded {
+  background: #333;
+  width: 100%;
+  opacity: 0.9;
+  filter: alpha(opacity=90);
+  -webkit-transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -ms-transition: opacity 0.5s ease-in-out;
+  -o-transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
+}
+.profiles .profile .thumb-wrapper .progress {
+  background: #bf3119;
+  left: 0;
 }
 .profiles .profile.inactive {
   opacity: 0.3;
   filter: alpha(opacity=30);
+}
+.profiles .profile.inactive .loaded {
+  opacity: 0;
+  filter: alpha(opacity=0);
 }
 .map {
   position: relative;

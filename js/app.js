@@ -108,7 +108,6 @@ SIG.profilesPlaylist = {
             console.log('playCard: ' + this.currentCard);
         } else {
             this.clearPlaylist();
-            this.soundObject.destruct();
         }
     },
     rewindPlaylist: function(){
@@ -118,11 +117,12 @@ SIG.profilesPlaylist = {
             this.playCard(this.data.playlists[this.targetPlaylist][this.currentCard]);
             this.highlightCard(this.currentCard);
             console.log('called playCard and highlightCard');
-        } 
+        }
     },
     clearPlaylist: function(){
             $('.profile').each(function(){
                 $(this).removeClass('inactive');
+                $(this).find('.loaded').remove();
             });
             SIG.profilesMap.clearMap.call(SIG.profilesMap);
             $('html, body').animate({
@@ -147,9 +147,11 @@ SIG.profilesPlaylist = {
                 self.advancePlaylist.call(self);
                 $('#playlist-pause i').addClass('icon-play');
                 $('#playlist-pause i').removeClass('icon-pause');
+                self.soundObject = "";
             },
             onstop: function(){
                 self.clearPlaylist.call(self);
+                this.destruct();
                 $('#playlist-pause i').addClass('icon-play');
                 $('#playlist-pause i').removeClass('icon-pause');
             },
@@ -160,9 +162,14 @@ SIG.profilesPlaylist = {
             onresume: function(){
                 $('#playlist-pause i').removeClass('icon-play');
                 $('#playlist-pause i').addClass('icon-pause');
+            },
+            whileplaying: function(){
+                var barWidth = Math.round(this.position/this.duration * 100) + '%';
+                console.log(barWidth);
+                self.cardElement.find('.progress').width(barWidth);
             }
         });
-        self.soundObject.play();
+        this.soundObject.play();
     },
     fadeCards: function(){
         $('.profile').each(function(){
@@ -181,6 +188,7 @@ SIG.profilesPlaylist = {
             scrollTop: this.cardElement.offset().top - 20
         }, 500);
         this.highlightedCard = this.cardElement;
+        $(this.highlightedCard).find('.thumb-wrapper').append('<div class="loaded"><div class="progress"></div></div>');
     }
 };
 

@@ -37,10 +37,30 @@
 			margin-left: 65px;
 		}
 		.thumb-wrapper {
+			position: relative;
 			background: #000;
+			.loaded,.progress {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				height: 20px;
+			}
+			.loaded {
+				background: #333;
+				width: 100%;
+				.opacity(90);
+				.transition(opacity .5s ease-in-out);
+			}
+			.progress {
+				background: @linkColor;
+				left: 0;
+			}
 		}
 		&.inactive{
 			.opacity(30);
+			.loaded {
+				.opacity(0);
+			}
 		}
 	}
 }
