@@ -30,7 +30,27 @@ SIG.profilesMap = {
         this.nhRaphael = {};
         //Draw Map and store Raphael paths
         for (var boundary in this.mapData){
+            var self = this;
             this.nhRaphael[boundary] = this.map.path(this.mapData[boundary]).attr(this.attr);
+
+            (function(rg, region){
+                rg[0].style.cursor = "pointer";
+                rg.hover(
+                    function(){
+                        $(SIG.profilesPlaylist.profileElements[SIG.profilesPlaylist.data.regions.indexOf(region)]).removeClass('inactive');
+                        rg.animate({ "fill-opacity":".5" },500);
+                    },
+                    function(){
+                        if (this != self.activeBoundary){
+                            $(SIG.profilesPlaylist.profileElements[SIG.profilesPlaylist.data.regions.indexOf(region)]).addClass('inactive');
+                            rg.animate({ "fill-opacity":".1" },500);
+                        }
+                    }
+                );
+                rg.click(function(){
+                    SIG.profilesPlaylist.advancePlaylist(SIG.profilesPlaylist.data.regions.indexOf(region) + 1, SIG.profilesPlaylist.targetPlaylist);
+                });
+            })(this.nhRaphael[boundary], boundary);
         }
     },
     setActiveBoundary: function(boundary){
@@ -50,14 +70,15 @@ SIG.profilesMap = {
 
 SIG.profilesPlaylist = {
     currentCard: 0,
+    targetPlaylist: 0,
     data: {
-        regions: ['seacoast','whiteMountains','lakes','dartmouthLakeSunapee','merrimackValley','greatNorthWoods','monadnock'],
+        regions: ['whiteMountains','lakes','dartmouthLakeSunapee','merrimackValley','greatNorthWoods','monadnock','seacoast'],
         playlists: [
-            ['/audio/steelydan.mp3','/audio/radiohead.mp3','/audio/toto.mp3','/audio/vh.mp3','/audio/coltrane.mp3','/audio/zeppelin.mp3','/audio/jay.mp3'],
-            ['/audio/steelydan.mp3','/audio/radiohead.mp3','/audio/toto.mp3','/audio/vh.mp3','/audio/coltrane.mp3','/audio/zeppelin.mp3','/audio/jay.mp3'],
-            ['/audio/steelydan.mp3','/audio/radiohead.mp3','/audio/toto.mp3','/audio/vh.mp3','/audio/coltrane.mp3','/audio/zeppelin.mp3','/audio/jay.mp3'],
-            ['/audio/steelydan.mp3','/audio/radiohead.mp3','/audio/toto.mp3','/audio/vh.mp3','/audio/coltrane.mp3','/audio/zeppelin.mp3','/audio/jay.mp3'],
-            ['/audio/steelydan.mp3','/audio/radiohead.mp3','/audio/toto.mp3','/audio/vh.mp3','/audio/coltrane.mp3','/audio/zeppelin.mp3','/audio/jay.mp3']
+            ['/audio/steelydan.mp3','/audio/radiohead.mp3','/audio/toto.mp3','/audio/vh.mp3','/audio/coltrane.mp3','/audio/michaeljackson.mp3','/audio/jay.mp3'],
+            ['/audio/steelydan.mp3','/audio/radiohead.mp3','/audio/toto.mp3','/audio/vh.mp3','/audio/coltrane.mp3','/audio/michaeljackson.mp3','/audio/jay.mp3'],
+            ['/audio/steelydan.mp3','/audio/radiohead.mp3','/audio/toto.mp3','/audio/vh.mp3','/audio/coltrane.mp3','/audio/michaeljackson.mp3','/audio/jay.mp3'],
+            ['/audio/steelydan.mp3','/audio/radiohead.mp3','/audio/toto.mp3','/audio/vh.mp3','/audio/coltrane.mp3','/audio/michaeljackson.mp3','/audio/jay.mp3'],
+            ['/audio/steelydan.mp3','/audio/radiohead.mp3','/audio/toto.mp3','/audio/vh.mp3','/audio/coltrane.mp3','/audio/michaeljackson.mp3','/audio/jay.mp3']
         ]
     },
     init: function(element){
@@ -79,16 +100,18 @@ SIG.profilesPlaylist = {
                     self.isPlaying = true;
                 } else {
                     self.soundObject.togglePause.call(self);
-                } 
-
+                }
                 $(self.currentButton).toggleClass('icon-play').toggleClass('icon-pause');
                 event.preventDefault();
             });
         });
         this.profileElements.each(function(index){
             $(this).click(function(event){
-                targetProfile = parseInt($(this).attr('id').slice(-1));
-                self.advancePlaylist(targetProfile);
+                if(self.isPlaying){
+                    targetProfile = parseInt($(this).attr('id').slice(-1), 10);
+                    self.advancePlaylist(targetProfile);
+                }
+
                 event.preventDefault();
             });
         });
@@ -152,7 +175,7 @@ SIG.profilesPlaylist = {
                 self.cardElement.find('.progress').width(barWidth);
             }
         });
-        this.soundObject.play();
+        self.soundObject.play();
     },
     fadeCards: function(){
         $('.profile').each(function(){

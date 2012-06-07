@@ -2779,6 +2779,9 @@ footer .partnership {
   position: relative;
   background: #000;
 }
+.profiles .profile .thumb-wrapper img {
+  cursor: pointer;
+}
 .profiles .profile .thumb-wrapper .loaded,
 .profiles .profile .thumb-wrapper .progress {
   position: absolute;
@@ -2808,6 +2811,10 @@ footer .partnership {
 .profiles .profile.inactive .loaded {
   opacity: 0;
   filter: alpha(opacity=0);
+}
+.profiles .profile:hover {
+  opacity: 1;
+  filter: alpha(opacity=100);
 }
 .map {
   position: relative;

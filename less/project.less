@@ -45,6 +45,9 @@
 		.thumb-wrapper {
 			position: relative;
 			background: #000;
+			img {
+				cursor: pointer;
+			}
 			.loaded,.progress {
 				position: absolute;
 				bottom: 0;
@@ -67,6 +70,9 @@
 			.loaded {
 				.opacity(0);
 			}
+		}
+		&:hover {
+			.opacity(100);
 		}
 	}
 }
