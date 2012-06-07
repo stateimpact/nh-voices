@@ -37,12 +37,20 @@ SIG.profilesMap = {
                 rg[0].style.cursor = "pointer";
                 rg.hover(
                     function(){
+                        if (!SIG.profilesPlaylist.isPlaying){
+                            SIG.profilesPlaylist.fadeCards();
+                        }
                         $(SIG.profilesPlaylist.profileElements[SIG.profilesPlaylist.data.regions.indexOf(region)]).removeClass('inactive');
                         rg.animate({ "fill-opacity":".5" },500);
                     },
                     function(){
                         if (this != self.activeBoundary){
-                            $(SIG.profilesPlaylist.profileElements[SIG.profilesPlaylist.data.regions.indexOf(region)]).addClass('inactive');
+                            if (SIG.profilesPlaylist.isPlaying){
+                                $(SIG.profilesPlaylist.profileElements[SIG.profilesPlaylist.data.regions.indexOf(region)]).addClass('inactive');
+                            } else {
+                                $(SIG.profilesPlaylist.profileElements[SIG.profilesPlaylist.data.regions.indexOf(region)]).addClass('inactive');
+                                SIG.profilesPlaylist.unfadeCards();
+                            }
                             rg.animate({ "fill-opacity":".1" },500);
                         }
                     }
@@ -97,7 +105,7 @@ SIG.profilesPlaylist = {
                     self.currentButton = currentButton;
                     self.targetPlaylist = targetPlaylist;
                     self.advancePlaylist(1, self.targetPlaylist);
-                    self.isPlaying = true;
+                    
                 } else {
                     self.soundObject.togglePause.call(self);
                 }
@@ -117,6 +125,7 @@ SIG.profilesPlaylist = {
         });
     },
     advancePlaylist: function(profile,playlist){
+        this.isPlaying = true;
         if (profile){
             this.currentCard = profile - 1;
         }
@@ -182,19 +191,28 @@ SIG.profilesPlaylist = {
             $(this).addClass('inactive');
         });
     },
+    unfadeCards: function(){
+        $('.profile').each(function(){
+            $(this).removeClass('inactive');
+        });
+    },
     highlightCard: function(card){
         var self = this;
         this.cardElement = $('#card' + (card + 1));
         if (this.highlightedCard){
             this.highlightedCard.addClass('inactive');
+            this.highlightedCard.find('.loaded').remove();
         }
         this.cardElement.removeClass('inactive');
         SIG.profilesMap.setActiveBoundary(card);
-        $('html, body').animate({
-            scrollTop: this.cardElement.offset().top - 20
-        }, 500);
+        this.scrollToCard(this.cardElement);
         this.highlightedCard = this.cardElement;
         $(this.highlightedCard).find('.thumb-wrapper').append('<div class="loaded"><div class="progress"></div></div>');
+    },
+    scrollToCard: function(card){
+            $('html, body').animate({
+            scrollTop: card.offset().top - 20
+        }, 500);
     }
 };
 
