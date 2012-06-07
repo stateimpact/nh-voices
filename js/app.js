@@ -53,70 +53,62 @@ SIG.profilesPlaylist = {
     data: {
         regions: ['seacoast','whiteMountains','lakes','dartmouthLakeSunapee','merrimackValley','greatNorthWoods','monadnock'],
         playlists: [
-            ['/audio/woo.mp3','/audio/woo.mp3','/audio/woo.mp3','/audio/woo.mp3','/audio/woo.mp3','/audio/woo.mp3','/audio/woo.mp3'],
-            ['/audio/woo.mp3','/audio/woo.mp3','/audio/woo.mp3','/audio/woo.mp3','/audio/woo.mp3','/audio/woo.mp3','/audio/woo.mp3'],
-            ['/audio/woo.mp3','/audio/woo.mp3','/audio/woo.mp3','/audio/woo.mp3','/audio/woo.mp3','/audio/woo.mp3','/audio/woo.mp3'],
-            ['/audio/woo.mp3','/audio/woo.mp3','/audio/woo.mp3','/audio/woo.mp3','/audio/woo.mp3','/audio/woo.mp3','/audio/woo.mp3'],
-            ['/audio/woo.mp3','/audio/woo.mp3','/audio/woo.mp3','/audio/woo.mp3','/audio/woo.mp3','/audio/woo.mp3','/audio/woo.mp3']
+            ['/audio/steelydan.mp3','/audio/radiohead.mp3','/audio/toto.mp3','/audio/vh.mp3','/audio/coltrane.mp3','/audio/zeppelin.mp3','/audio/jay.mp3'],
+            ['/audio/steelydan.mp3','/audio/radiohead.mp3','/audio/toto.mp3','/audio/vh.mp3','/audio/coltrane.mp3','/audio/zeppelin.mp3','/audio/jay.mp3'],
+            ['/audio/steelydan.mp3','/audio/radiohead.mp3','/audio/toto.mp3','/audio/vh.mp3','/audio/coltrane.mp3','/audio/zeppelin.mp3','/audio/jay.mp3'],
+            ['/audio/steelydan.mp3','/audio/radiohead.mp3','/audio/toto.mp3','/audio/vh.mp3','/audio/coltrane.mp3','/audio/zeppelin.mp3','/audio/jay.mp3'],
+            ['/audio/steelydan.mp3','/audio/radiohead.mp3','/audio/toto.mp3','/audio/vh.mp3','/audio/coltrane.mp3','/audio/zeppelin.mp3','/audio/jay.mp3']
         ]
     },
     init: function(element){
         var self = this;
         this.soundManager = soundManager;
         this.soundManager.url = './swf/';
-        this.profileElements = $(element).find('li a');
-        this.controlElements = $('.sound-controls').find('a');
+        this.questionElements = $(element).find('li a');
+        this.profileElements = $('.profile');
+        this.questionElements.each(function(index){
+            $(this).click(function(event){
+                var targetPlaylist = $(this).attr('data-playlist').slice(-1);
+                var currentButton = $(this).find('i');
+
+                if(currentButton !== self.currentButton && targetPlaylist !== self.targetPlaylist){
+                    $(self.currentButton).toggleClass('icon-play').toggleClass('icon-pause');
+                    self.currentButton = currentButton;
+                    self.targetPlaylist = targetPlaylist;
+                    self.advancePlaylist(1, self.targetPlaylist);
+                    self.isPlaying = true;
+                } else {
+                    self.soundObject.togglePause.call(self);
+                } 
+
+                $(self.currentButton).toggleClass('icon-play').toggleClass('icon-pause');
+                event.preventDefault();
+            });
+        });
         this.profileElements.each(function(index){
             $(this).click(function(event){
-                self.targetPlaylist = $(this).attr('data-playlist').slice(-1);
-                self.startPlaylist(self.targetPlaylist);
-                event.preventDefault();
-            });
-        });
-        this.controlElements.each(function(index){
-            $(this).click(function(event){
-                switch($(this).attr('id')){
-                    case "playlist-pause":
-                        self.soundObject.togglePause.call(self);
-                        break;
-                    case "playlist-stop":
-                        self.soundObject.stop.call(self);
-                        break;
-                    case "playlist-back":
-                        self.rewindPlaylist.call(self);
-                        break;
-                    case "playlist-forward":
-                        self.advancePlaylist.call(self);
-                        break;
-                    default:
-                        break;
-                }
+                targetProfile = parseInt($(this).attr('id').slice(-1));
+                self.advancePlaylist(targetProfile);
                 event.preventDefault();
             });
         });
     },
-    startPlaylist: function(target){
-        console.log('playlist: ' + this.targetPlaylist);
-        this.playCard(this.data.playlists[target][0]);
-        this.highlightCard(0);
-    },
-    advancePlaylist: function(){
-        if (this.currentCard < 6){
-            this.currentCard++;
+    advancePlaylist: function(profile,playlist){
+        if (profile){
+            this.currentCard = profile - 1;
+        }
+        if (playlist){
+            this.targetPlaylist = playlist;
+        }
+        if (this.currentCard < 7){
+            console.log('playcard: ' + this.currentCard);
+            console.log('playlist: ' + this.targetPlaylist);
             this.playCard(this.data.playlists[this.targetPlaylist][this.currentCard]);
             this.highlightCard(this.currentCard);
-            console.log('playCard: ' + this.currentCard);
+            this.currentCard++;
         } else {
             this.clearPlaylist();
-        }
-    },
-    rewindPlaylist: function(){
-        console.log(this.currentCard);
-        if (0 < this.currentCard){
-            this.currentCard--;
-            this.playCard(this.data.playlists[this.targetPlaylist][this.currentCard]);
-            this.highlightCard(this.currentCard);
-            console.log('called playCard and highlightCard');
+            this.isPlaying = false;
         }
     },
     clearPlaylist: function(){
@@ -129,9 +121,12 @@ SIG.profilesPlaylist = {
                 scrollTop: this.cardElement.offsetParent().offset().top - 20
             }, 500);
             this.currentCard = 0;
+            $(this.currentButton).toggleClass('icon-play').toggleClass('icon-pause');
+            this.currentButton = false;
     },
     playCard: function(file){
         var self = this;
+        self.isPlaying = true;
         if (this.soundObject){
             this.soundObject.destruct();
         }
@@ -140,32 +135,20 @@ SIG.profilesPlaylist = {
             url: file,
             onplay: function(){
                 self.fadeCards();
-                $('#playlist-pause i').removeClass('icon-play');
-                $('#playlist-pause i').addClass('icon-pause');
             },
             onfinish: function(){
                 self.advancePlaylist.call(self);
-                $('#playlist-pause i').addClass('icon-play');
-                $('#playlist-pause i').removeClass('icon-pause');
-                self.soundObject = "";
             },
             onstop: function(){
                 self.clearPlaylist.call(self);
-                this.destruct();
-                $('#playlist-pause i').addClass('icon-play');
-                $('#playlist-pause i').removeClass('icon-pause');
             },
             onpause: function(){
-                $('#playlist-pause i').addClass('icon-play');
-                $('#playlist-pause i').removeClass('icon-pause');
             },
             onresume: function(){
-                $('#playlist-pause i').removeClass('icon-play');
-                $('#playlist-pause i').addClass('icon-pause');
+                console.log('resume');
             },
             whileplaying: function(){
                 var barWidth = Math.round(this.position/this.duration * 100) + '%';
-                console.log(barWidth);
                 self.cardElement.find('.progress').width(barWidth);
             }
         });
