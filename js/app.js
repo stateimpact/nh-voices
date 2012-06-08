@@ -237,7 +237,7 @@ SIG.profilesPlaylist = {
         }
         this.soundObject = this.soundManager.createSound({
             id:'mySound',
-            url: file,
+            url: "." + file,
             onplay: function(){
                 self.fadeCards();
             },
