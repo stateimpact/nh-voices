@@ -56,7 +56,7 @@ SIG.profilesMap = {
                     }
                 );
                 rg.click(function(){
-                    SIG.profilesPlaylist.advancePlaylist(SIG.profilesPlaylist.data.regions.indexOf(region) + 1, SIG.profilesPlaylist.targetPlaylist);
+                    SIG.profilesPlaylist.advancePlaylist(SIG.profilesPlaylist.data.regions.indexOf(region), SIG.profilesPlaylist.targetPlaylist);
                 });
             })(this.nhRaphael[boundary], boundary);
         }
@@ -100,16 +100,18 @@ SIG.profilesPlaylist = {
                 var thisPlaylist = $(this).attr('data-playlist').slice(-1);
 
                 if(thisPlaylist !== self.targetPlaylist){
-                    self.advancePlaylist(1, thisPlaylist);
-                } else {
+                    self.advancePlaylist(0, thisPlaylist);
+                } else if (self.isPlaying) {
                     self.soundObject.togglePause.call(self);
+                } else {
+                    self.advancePlaylist(0, thisPlaylist);
                 }
                 event.preventDefault();
             });
         });
         this.profileElements.each(function(index){
             $(this).click(function(event){
-                targetProfile = parseInt($(this).attr('id').slice(-1), 10);
+                targetProfile = parseInt($(this).attr('id').slice(-1) - 1, 10);
                 self.advancePlaylist(targetProfile,self.targetPlaylist);
                 event.preventDefault();
             });
@@ -117,20 +119,17 @@ SIG.profilesPlaylist = {
     },
     advancePlaylist: function(profile,playlist){
         this.isPlaying = true;
+        this.currentCard = profile;
+        this.switchPlaylist(playlist);
         this.playlistButton = this.questionElements[this.targetPlaylist];
 
-        if (profile){
-            this.currentCard = profile - 1;
-        }
+        $(this.playlistButton).find('i').attr('class','icon-pause');
 
-        this.switchPlaylist(playlist);
-
-        if (this.currentCard < 7){
+        if (this.currentCard < this.profileElements.length){
             console.log('playcard: ' + this.currentCard);
             console.log('playlist: ' + this.targetPlaylist);
             this.playCard(this.data.playlists[this.targetPlaylist][this.currentCard]);
             this.highlightCard(this.currentCard);
-            this.currentCard++;
         } else {
             this.clearPlaylist();
             this.isPlaying = false;
@@ -138,6 +137,7 @@ SIG.profilesPlaylist = {
     },
     switchPlaylist: function(playlist){
         $(this.questionElements[this.targetPlaylist]).parent().removeClass('active');
+        $(this.playlistButton).find('i').attr('class','icon-play');
         // this.questionElements[this.targetPlaylist].removeClass('active');
         this.targetPlaylist = playlist;
         $(this.questionElements[playlist]).parent().addClass('active');
@@ -147,13 +147,13 @@ SIG.profilesPlaylist = {
                 $(this).removeClass('inactive');
                 $(this).find('.loaded').remove();
             });
+            $(this.playlistButton).find('i').attr('class','icon-play');
             SIG.profilesMap.clearMap.call(SIG.profilesMap);
             $('html, body').animate({
                 scrollTop: this.cardElement.offsetParent().offset().top - 20
             }, 500);
             this.currentCard = 0;
-            $(this.currentButton).toggleClass('icon-play').toggleClass('icon-pause');
-            this.currentButton = false;
+            
     },
     playCard: function(file){
         var self = this;
@@ -168,15 +168,18 @@ SIG.profilesPlaylist = {
                 self.fadeCards();
             },
             onfinish: function(){
-                self.advancePlaylist.call(self);
+                self.currentCard++;
+                console.log(self.currentCard);
+                self.advancePlaylist.apply(self,[self.currentCard, self.targetPlaylist]);
             },
             onstop: function(){
                 self.clearPlaylist.call(self);
             },
             onpause: function(){
+                $(self.playlistButton).find('i').attr('class','icon-play');
             },
             onresume: function(){
-                console.log('resume');
+                $(self.playlistButton).find('i').attr('class','icon-pause');
             },
             whileplaying: function(){
                 var barWidth = Math.round(this.position/this.duration * 100) + '%';
