@@ -97,41 +97,34 @@ SIG.profilesPlaylist = {
         this.profileElements = $('.profile');
         this.questionElements.each(function(index){
             $(this).click(function(event){
-                var targetPlaylist = $(this).attr('data-playlist').slice(-1);
-                var currentButton = $(this).find('i');
+                var thisPlaylist = $(this).attr('data-playlist').slice(-1);
 
-                if(currentButton !== self.currentButton && targetPlaylist !== self.targetPlaylist){
-                    $(self.currentButton).toggleClass('icon-play').toggleClass('icon-pause');
-                    self.currentButton = currentButton;
-                    self.targetPlaylist = targetPlaylist;
-                    self.advancePlaylist(1, self.targetPlaylist);
-                    
+                if(thisPlaylist !== self.targetPlaylist){
+                    self.advancePlaylist(1, thisPlaylist);
                 } else {
                     self.soundObject.togglePause.call(self);
                 }
-                $(self.currentButton).toggleClass('icon-play').toggleClass('icon-pause');
                 event.preventDefault();
             });
         });
         this.profileElements.each(function(index){
             $(this).click(function(event){
-                if(self.isPlaying){
-                    targetProfile = parseInt($(this).attr('id').slice(-1), 10);
-                    self.advancePlaylist(targetProfile);
-                }
-
+                targetProfile = parseInt($(this).attr('id').slice(-1), 10);
+                self.advancePlaylist(targetProfile,self.targetPlaylist);
                 event.preventDefault();
             });
         });
     },
     advancePlaylist: function(profile,playlist){
         this.isPlaying = true;
+        this.playlistButton = this.questionElements[this.targetPlaylist];
+
         if (profile){
             this.currentCard = profile - 1;
         }
-        if (playlist){
-            this.targetPlaylist = playlist;
-        }
+
+        this.switchPlaylist(playlist);
+
         if (this.currentCard < 7){
             console.log('playcard: ' + this.currentCard);
             console.log('playlist: ' + this.targetPlaylist);
@@ -142,6 +135,12 @@ SIG.profilesPlaylist = {
             this.clearPlaylist();
             this.isPlaying = false;
         }
+    },
+    switchPlaylist: function(playlist){
+        $(this.questionElements[this.targetPlaylist]).parent().removeClass('active');
+        // this.questionElements[this.targetPlaylist].removeClass('active');
+        this.targetPlaylist = playlist;
+        $(this.questionElements[playlist]).parent().addClass('active');
     },
     clearPlaylist: function(){
             $('.profile').each(function(){
