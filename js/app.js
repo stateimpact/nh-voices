@@ -41,7 +41,7 @@ SIG.profilesMap = {
     },
     drawMap: function(){
         this.attr = {
-            "fill": "#aaaaaa",
+            "fill": "#18817e",
             "fill-opacity": ".1",
             "stroke": "#aaa",
             "stroke-opacity": "1",
@@ -167,15 +167,26 @@ SIG.profilesPlaylist = {
                 targetProfile = parseInt($(this).attr('id').slice(-1) - 1, 10);
                 if (targetProfile != self.currentCard){
                     self.advancePlaylist(targetProfile,self.targetPlaylist);
+                } else if (!self.isPlaying){
+                    self.advancePlaylist(targetProfile,self.targetPlaylist);
+                } else {
+                    return;
                 }
                 event.preventDefault();
             });
             $(this).hover(
                 function(event){
                     SIG.profilesMap.highlightBoundary(self.data.regions[index]);
+                    if(!self.isPlaying){
+                        self.fadeCards();
+                        this.removeClass('inactive');
+                    }
                 },
                 function(event){
                     SIG.profilesMap.clearBoundary(self.data.regions[index]);
+                    if(!self.isPlaying){
+                        self.unfadeCards();
+                    }
                 }
             );
         });
@@ -277,11 +288,17 @@ SIG.profilesPlaylist = {
             self.soundObject.resume();
             self.soundObject.setPosition(timeOffset);
             event.preventDefault();
-        })
+        });
     },
     scrollToCard: function(card){
-            $('html, body').animate({
-            scrollTop: card.offset().top - 20
+        var offset = card.offset().top - 20;
+        console.log(card);
+        if (card.attr('id') === 'card7'){
+            offset = $('#card4').offset().top - 20
+        }
+
+        $('html, body').animate({
+            scrollTop: offset
         }, 500);
     }
 };
