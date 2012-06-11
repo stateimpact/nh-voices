@@ -256,13 +256,12 @@
     <script src='http://stateimpact.npr.org/new-hampshire/wp-content/plugins/argo-audio-player/js/sm.min.js'></script>
     <script type="text/javascript">
 
-    $(function() {
+    $(document).ready(function() {
         var sidebars = $('.fixed').scrollToFixed({ 
           marginTop:20, 
-          limit: $('#comments').offset().top - 450
+          limit: $('#comments').offset().top - $('.questions').outerHeight() - 20
         });
-        var limit = $('#comments').offset().top - 450;
-        console.log('comments offset top: ' + $('#comments').offset().top);
+        var limit = $('#comments').offset().top - $('.questions').outerHeight() - 20;
     });
 
     </script>

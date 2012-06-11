@@ -158,7 +158,7 @@ SIG.profilesPlaylist = {
         this.profileElements = $('.profile');
         this.questionElements.each(function(index){
             $(this).click(function(event){
-                var thisPlaylist = $(this).attr('data-playlist').slice(-1);
+                var thisPlaylist = parseInt($(this).attr('data-playlist').slice(-1));
 
                 if(thisPlaylist !== self.targetPlaylist){
                     self.advancePlaylist(0, thisPlaylist);
