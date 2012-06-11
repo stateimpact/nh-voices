@@ -55,9 +55,9 @@
     <article id="container" class="container">
       <header class="intro row">
         <div class="span4">
-          <h1 class="headline">Voices of New Hampshire</span></h1>
-          <h2 class="subhead">Deck head here</h2>
-          <h4 class="credit">By <a href="mailto:camico@npr.org">Chris Amico</a>, <a href="mailto:ddbelius@npr.org">Danny DeBelius</a>, <br /> and <a href="mailto:aloder@nhpr.org">Amanda Loder</a></h4>
+          <h1 class="headline">Getting By, <br />Getting Ahead</h1>
+          <h2 class="subhead">Voices of the New Hampshire Economy</h2>
+          <h4 class="credit">By <a href="mailto:ddbelius@npr.org">Danny DeBelius</a> and <a href="mailto:aloder@nhpr.org">Amanda Loder</a></h4>
         </div>
         <div class="span8">
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -89,7 +89,7 @@
         <div class="span6 profiles">
           <div class="row">
             <div id="card1" class="profile span2">
-              <div class="thumb-wrapper"><img src="http://placekitten.com/g/140/140"></div>
+              <div class="thumb-wrapper"><img src="http://placehold.it/140x140/51aade/a8d5ef/"></div>
               <div class="profile-content">
                 <h3>Ed Butler</h3>
                 <dl class="dl-horizontal">
@@ -104,7 +104,7 @@
               </div>
             </div>
             <div id="card2" class="profile span2">
-              <div class="thumb-wrapper"><img src="http://placekitten.com/140/140"></div>
+              <div class="thumb-wrapper"><img src="http://placehold.it/140x140/51aade/a8d5ef/"></div>
               <div class="profile-content">
                 <h3>TK</h3>
                 <dl class="dl-horizontal">
@@ -119,7 +119,7 @@
               </div>
             </div>
             <div id="card3" class="profile span2">
-              <div class="thumb-wrapper"><img src="http://placekitten.com/g/140/140"></div>
+              <div class="thumb-wrapper"><img src="http://placehold.it/140x140/51aade/a8d5ef/"></div>
               <div class="profile-content">
                 <h3>Tilman Gerngross</h3>
                 <dl class="dl-horizontal">
@@ -136,7 +136,7 @@
           </div>
           <div class="row">
             <div id="card4" class="profile span2">
-              <div class="thumb-wrapper"><img src="http://placekitten.com/g/140/140"></div>
+              <div class="thumb-wrapper"><img src="http://placehold.it/140x140/51aade/a8d5ef/"></div>
               <div class="profile-content">
                 <h3>TK</h3>
                 <dl class="dl-horizontal">
@@ -151,11 +151,13 @@
               </div>
             </div>
             <div id="card5" class="profile span2">
-              <div class="thumb-wrapper"><img src="http://placekitten.com/140/140"></div>
+              <div class="thumb-wrapper"><img src="http://placehold.it/140x140/51aade/a8d5ef/"></div>
               <div class="profile-content">
                 <h3>TK</h3>
                 <dl class="dl-horizontal">
                   <dt>Age</dt>
+                    <dd>TK</dd>
+                  <dt>City</dt>
                     <dd>TK</dd>
                   <dt>Region</dt>
                     <dd>Great North Woods</dd>
@@ -164,16 +166,16 @@
               </div>
             </div>
             <div id="card6" class="profile span2">
-              <div class="thumb-wrapper"><img src="http://placekitten.com/g/140/140"></div>
+              <div class="thumb-wrapper"><img src="http://placehold.it/140x140/51aade/a8d5ef/"></div>
               <div class="profile-content">
                 <h3>Tracy Smith</h3>
                 <dl class="dl-horizontal">
                   <dt>Age</dt>
                     <dd>TK</dd>
-                  <dt>Region</dt>
-                    <dd>Monadnock</dd>
                   <dt>City</dt>
                     <dd>TK</dd>
+                  <dt>Region</dt>
+                    <dd>Monadnock</dd>
                 </dl>
                 <p class="quote"><em></em></p>
               </div>
@@ -181,7 +183,7 @@
           </div>
           <div class="row">
             <div id="card7" class="profile span2">
-              <div class="thumb-wrapper"><img src="http://placekitten.com/g/140/140"></div>
+              <div class="thumb-wrapper"><img src="http://placehold.it/140x140/51aade/a8d5ef/"></div>
               <div class="profile-content">
                 <h3>Assiah Russell</h3>
                 <dl class="dl-horizontal">
@@ -255,7 +257,16 @@
     <script type="text/javascript">
 
     $(function() {
-        var sidebars = $('.fixed').scrollToFixed({ marginTop:20, limit: $('.comments').offset().top - 150 });
+        var sidebars = $('.fixed').scrollToFixed({ 
+          marginTop:20, 
+          limit: $('.comments').offset().top - 150,
+          preFixed: function(){
+            $('.fixed').addClass('fixed-active');
+          },
+          postFixed: function(){
+            $('.fixed').removeClass('fixed-active');
+          }
+        });
     });
 
     </script>

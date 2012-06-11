@@ -3012,12 +3012,14 @@ footer .partnership {
 .profiles .profile dt,
 .profiles .profile dd {
   line-height: 16px;
+  font-weight: 400;
 }
 .profiles .profile dt {
-  width: 60px;
+  width: 40px;
+  text-transform: uppercase;
 }
 .profiles .profile dd {
-  margin-left: 65px;
+  margin-left: 50px;
 }
 .profiles .profile .thumb-wrapper {
   position: relative;

@@ -18,19 +18,19 @@ SIG.profilesMap = {
                 name: "White Mountains"
             },
             lakes: {
-                name: "Lakes"
+                name: "Lakes Region"
             },
             dartmouthLakeSunapee: {
-                name: "Dartmouth/Lake Sunapee"
+                name: "Dartmouth-Lake Sunapee"
             },
             merrimackValley: {
                 name: "Merrimack Valley"
             },
             greatNorthWoods: {
-                name: "Great North Woods"
+                name: "North Country"
             },
             monadnock: {
-                name: "Monadnock"
+                name: "Monadnock Region"
             },
             seacoast: {
                 name: "Seacoast"
@@ -60,10 +60,18 @@ SIG.profilesMap = {
                 rg[0].style.cursor = "pointer";
                 rg.hover(
                     function(){
+                        var cardElement = $(SIG.profilesPlaylist.profileElements[SIG.profilesPlaylist.data.regions.indexOf(region)]);
+                        var scrollCard = cardElement;
                         if (!SIG.profilesPlaylist.isPlaying){
                             SIG.profilesPlaylist.fadeCards();
                         }
-                        $(SIG.profilesPlaylist.profileElements[SIG.profilesPlaylist.data.regions.indexOf(region)]).removeClass('inactive');
+                        cardElement.removeClass('inactive');
+                        if ($(cardElement).attr('id').slice(-1) == 7){
+                            scrollCard = '#card4';
+                        }
+                        $('html, body').animate({
+                                scrollTop: $(scrollCard).offset().top - 20
+                            }, 500);
                         self.highlightBoundary(region);
                     },
                     function(){
@@ -165,13 +173,7 @@ SIG.profilesPlaylist = {
         this.profileElements.each(function(index){
             $(this).click(function(event){
                 targetProfile = parseInt($(this).attr('id').slice(-1) - 1, 10);
-                if (targetProfile != self.currentCard){
-                    self.advancePlaylist(targetProfile,self.targetPlaylist);
-                } else if (!self.isPlaying){
-                    self.advancePlaylist(targetProfile,self.targetPlaylist);
-                } else {
-                    return;
-                }
+                self.advancePlaylist(targetProfile,self.targetPlaylist);
                 event.preventDefault();
             });
             $(this).hover(
@@ -179,7 +181,7 @@ SIG.profilesPlaylist = {
                     SIG.profilesMap.highlightBoundary(self.data.regions[index]);
                     if(!self.isPlaying){
                         self.fadeCards();
-                        this.removeClass('inactive');
+                        $(this).removeClass('inactive');
                     }
                 },
                 function(event){
@@ -283,16 +285,16 @@ SIG.profilesPlaylist = {
         this.scrollToCard(this.cardElement);
         this.highlightedCard = this.cardElement;
         $(this.highlightedCard).find('.thumb-wrapper').append('<div class="loaded"><div class="progress"></div></div>');
-        $(this.highlightedCard).find('.loaded').click(function(eventData){
-            var timeOffset = eventData.offsetX / 140 * self.soundObject.durationEstimate;
+        $(this.highlightedCard).find('.loaded').click(function(event){
+            var timeOffset = event.offsetX / 140 * self.soundObject.durationEstimate;
             self.soundObject.resume();
             self.soundObject.setPosition(timeOffset);
             event.preventDefault();
+            event.stopPropagation();
         });
     },
     scrollToCard: function(card){
         var offset = card.offset().top - 20;
-        console.log(card);
         if (card.attr('id') === 'card7'){
             offset = $('#card4').offset().top - 20
         }
