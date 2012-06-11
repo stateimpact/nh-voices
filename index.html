@@ -89,7 +89,7 @@
         <div class="span6 profiles">
           <div class="row">
             <div id="card1" class="profile span2">
-              <div class="thumb-wrapper"><img src="http://placehold.it/140x140/51aade/a8d5ef/"></div>
+              <div class="thumb-wrapper"><img src="http://placehold.it/140x140/51aade/a8d5ef/" width="140" height ="140"></div>
               <div class="profile-content">
                 <h3>Ed Butler</h3>
                 <dl class="dl-horizontal">
@@ -104,7 +104,7 @@
               </div>
             </div>
             <div id="card2" class="profile span2">
-              <div class="thumb-wrapper"><img src="http://placehold.it/140x140/51aade/a8d5ef/"></div>
+              <div class="thumb-wrapper"><img src="http://placehold.it/140x140/51aade/a8d5ef/" width="140" height ="140"></div>
               <div class="profile-content">
                 <h3>TK</h3>
                 <dl class="dl-horizontal">
@@ -119,7 +119,7 @@
               </div>
             </div>
             <div id="card3" class="profile span2">
-              <div class="thumb-wrapper"><img src="http://placehold.it/140x140/51aade/a8d5ef/"></div>
+              <div class="thumb-wrapper"><img src="http://placehold.it/140x140/51aade/a8d5ef/" width="140" height ="140"></div>
               <div class="profile-content">
                 <h3>Tilman Gerngross</h3>
                 <dl class="dl-horizontal">
@@ -136,7 +136,7 @@
           </div>
           <div class="row">
             <div id="card4" class="profile span2">
-              <div class="thumb-wrapper"><img src="http://placehold.it/140x140/51aade/a8d5ef/"></div>
+              <div class="thumb-wrapper"><img src="http://placehold.it/140x140/51aade/a8d5ef/" width="140" height ="140"></div>
               <div class="profile-content">
                 <h3>TK</h3>
                 <dl class="dl-horizontal">
@@ -151,7 +151,7 @@
               </div>
             </div>
             <div id="card5" class="profile span2">
-              <div class="thumb-wrapper"><img src="http://placehold.it/140x140/51aade/a8d5ef/"></div>
+              <div class="thumb-wrapper"><img src="http://placehold.it/140x140/51aade/a8d5ef/" width="140" height ="140"></div>
               <div class="profile-content">
                 <h3>TK</h3>
                 <dl class="dl-horizontal">
@@ -166,7 +166,7 @@
               </div>
             </div>
             <div id="card6" class="profile span2">
-              <div class="thumb-wrapper"><img src="http://placehold.it/140x140/51aade/a8d5ef/"></div>
+              <div class="thumb-wrapper"><img src="http://placehold.it/140x140/51aade/a8d5ef/" width="140" height ="140"></div>
               <div class="profile-content">
                 <h3>Tracy Smith</h3>
                 <dl class="dl-horizontal">
@@ -183,7 +183,7 @@
           </div>
           <div class="row">
             <div id="card7" class="profile span2">
-              <div class="thumb-wrapper"><img src="http://placehold.it/140x140/51aade/a8d5ef/"></div>
+              <div class="thumb-wrapper"><img src="http://placehold.it/140x140/51aade/a8d5ef/" width="140" height ="140"></div>
               <div class="profile-content">
                 <h3>Assiah Russell</h3>
                 <dl class="dl-horizontal">
@@ -204,7 +204,7 @@
           <h2 id="region"></h2>
         </div>      
       </div>
-      <div class="comments row">
+      <div id="comments" class="comments row">
         <div class="span4">
           <h2>Comments</h2>
         </div>
@@ -259,14 +259,10 @@
     $(function() {
         var sidebars = $('.fixed').scrollToFixed({ 
           marginTop:20, 
-          limit: $('.comments').offset().top - 150,
-          preFixed: function(){
-            $('.fixed').addClass('fixed-active');
-          },
-          postFixed: function(){
-            $('.fixed').removeClass('fixed-active');
-          }
+          limit: $('#comments').offset().top - 450
         });
+        var limit = $('#comments').offset().top - 450;
+        console.log('comments offset top: ' + $('#comments').offset().top);
     });
 
     </script>

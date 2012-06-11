@@ -103,6 +103,7 @@
         // Sets the target element to fixed. Also, sets the spacer to fill the
         // void left by the target element.
         function setFixed() {
+            console.log(base.options.limit);
             // Only fix the target element and the spacer if we need to.
             if (!isFixed()) {
                 // Set the spacer to fill the height and width of the target
@@ -111,7 +112,7 @@
                     'display' : target.css('display'),
                     'width' : target.outerWidth(true),
                     'height' : target.outerHeight(true),
-                    'float' : target.css('float')
+                    'float' : 'left'
                 });
 
                 // Set the target element to fixed and set its width so it does
@@ -196,7 +197,6 @@
 
             // Grab the current vertical scroll position.
             var y = $(window).scrollTop();
-
             // If the vertical scroll position, plus the optional margin, would
             // put the target element at the specified limit, set the target
             // element to absolute.
