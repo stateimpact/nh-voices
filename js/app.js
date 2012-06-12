@@ -15,25 +15,39 @@ SIG.profilesMap = {
         };
         this.regionInfo = {
             whiteMountains: {
-                name: "White Mountains"
+                name: "White Mountains",
+                population: "53,398",
+                povertyRate: "5.9"
             },
             lakes: {
-                name: "Lakes Region"
+                name: "Lakes Region",
+                population: "188,585",
+                povertyRate: "6.5"
             },
             dartmouthLakeSunapee: {
-                name: "Dartmouth-Lake Sunapee"
+                name: "Dartmouth-Lake Sunapee",
+                population: "108,028",
+                povertyRate: "5.6"
             },
             merrimackValley: {
-                name: "Merrimack Valley"
+                name: "Merrimack Valley",
+                population: "58,6156",
+                povertyRate: "4.5"
             },
             greatNorthWoods: {
-                name: "North Country"
+                name: "North Country",
+                population: "25,336",
+                povertyRate: "9.5"
             },
             monadnock: {
-                name: "Monadnock Region"
+                name: "Monadnock Region",
+                population: "131,405",
+                povertyRate: "5.3"
             },
             seacoast: {
-                name: "Seacoast"
+                name: "Seacoast",
+                population: "223,562",
+                povertyRate: "4"
             }
         };
         this.map = Raphael(element, width, height);
@@ -62,16 +76,16 @@ SIG.profilesMap = {
                     function(){
                         var cardElement = $(SIG.profilesPlaylist.profileElements[SIG.profilesPlaylist.data.regions.indexOf(region)]);
                         var scrollCard = cardElement;
-                        if (!SIG.profilesPlaylist.isPlaying){
-                            SIG.profilesPlaylist.fadeCards();
-                        }
-                        cardElement.removeClass('inactive');
                         if ($(cardElement).attr('id').slice(-1) == 7){
                             scrollCard = '#card4';
                         }
-                        $('html, body').animate({
+                        if (!SIG.profilesPlaylist.isPlaying){
+                            SIG.profilesPlaylist.fadeCards();
+                            $('html, body').animate({
                                 scrollTop: $(scrollCard).offset().top - 20
                             }, 500);
+                        }
+                        cardElement.removeClass('inactive');
                         self.highlightBoundary(region);
                     },
                     function(){
@@ -99,8 +113,9 @@ SIG.profilesMap = {
         }
         this.nhRaphael[region].animate({
             'fill-opacity': '.7',
-            'fill':'#52aadd'
-        },500);
+            'fill':'#BF3119',
+            'stroke':'#BF3119'
+        },500).toFront();
         this.activeBoundary = this.nhRaphael[region];
         this.activeRegion = region;
         this.setMapInfo(this.activeRegion);
@@ -113,16 +128,23 @@ SIG.profilesMap = {
     },
     highlightBoundary: function(boundary){
         if (boundary != this.activeRegion){
-            this.nhRaphael[boundary].animate({ "fill-opacity":".5" },500);
+            this.nhRaphael[boundary].animate({
+                "fill-opacity":".5",
+                "stroke":"#18817e"
+            },500).toFront();
             this.setMapInfo(boundary);
         }
     },
     clearBoundary: function(boundary){
         if (boundary != this.activeRegion){
-            this.nhRaphael[boundary].animate({ "fill-opacity":".1" },500);
+            this.nhRaphael[boundary].animate({
+                "fill-opacity":".1",
+                "stroke":"#aaaaaa"
+            },500);
         }
         if (this.activeRegion){
             this.setMapInfo(this.activeRegion);
+            this.nhRaphael[this.activeRegion].toFront();
         } else {
             this.setMapInfo("");
         }
@@ -130,8 +152,10 @@ SIG.profilesMap = {
     setMapInfo: function(boundary){
         if (boundary){
             $('#region').text(this.regionInfo[boundary].name);
+            $('#population').html("<strong>Population</strong> " + this.regionInfo[boundary].population);
+            $('#poverty').html("<strong>Families in Poverty</strong> " + this.regionInfo[boundary].povertyRate + "%");
         } else {
-            $('#region').text("");
+            $('#region, #population, #poverty').text("");
         }
         
     }
@@ -153,6 +177,8 @@ SIG.profilesPlaylist = {
     init: function(element){
         var self = this;
         this.soundManager = soundManager;
+        this.soundManager.useHTML5Audio = true;
+        this.soundManager.preferFlash = false;
         this.soundManager.url = './swf/';
         this.questionElements = $(element).find('li a');
         this.profileElements = $('.profile');
@@ -174,6 +200,7 @@ SIG.profilesPlaylist = {
             $(this).click(function(event){
                 targetProfile = parseInt($(this).attr('id').slice(-1) - 1, 10);
                 self.advancePlaylist(targetProfile,self.targetPlaylist);
+                event.isPropagationStopped();
                 event.preventDefault();
             });
             $(this).hover(
@@ -237,7 +264,7 @@ SIG.profilesPlaylist = {
         if (this.soundObject){
             this.soundObject.destruct();
         }
-        this.soundObject = this.soundManager.createSound({
+        self.soundObject = this.soundManager.createSound({
             id:'mySound',
             url: "." + file,
             onplay: function(){
@@ -261,6 +288,7 @@ SIG.profilesPlaylist = {
                 self.cardElement.find('.progress').width(barWidth);
             }
         });
+        console.log(file);
         self.soundObject.play();
     },
     fadeCards: function(){
@@ -289,8 +317,9 @@ SIG.profilesPlaylist = {
             var timeOffset = event.offsetX / 140 * self.soundObject.durationEstimate;
             self.soundObject.resume();
             self.soundObject.setPosition(timeOffset);
-            event.preventDefault();
             event.stopPropagation();
+            event.preventDefault();
+            console.log(event);
         });
     },
     scrollToCard: function(card){
@@ -304,8 +333,6 @@ SIG.profilesPlaylist = {
         }, 500);
     }
 };
-
-
 
 $(function() {
     SIG.profilesMap.init('map');
