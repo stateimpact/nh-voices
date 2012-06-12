@@ -17,37 +17,44 @@ SIG.profilesMap = {
             whiteMountains: {
                 name: "White Mountains",
                 population: "53,398",
-                povertyRate: "5.9"
+                povertyRate: "5.9",
+                topicPage: "http://stateimpact.npr.org/new-hampshire/tag/white-mountains/"
             },
             lakes: {
                 name: "Lakes Region",
                 population: "188,585",
-                povertyRate: "6.5"
+                povertyRate: "6.5",
+                topicPage: "http://stateimpact.npr.org/new-hampshire/tag/lakes-region/"
             },
             dartmouthLakeSunapee: {
                 name: "Dartmouth-Lake Sunapee",
                 population: "108,028",
-                povertyRate: "5.6"
+                povertyRate: "5.6",
+                topicPage: "http://stateimpact.npr.org/new-hampshire/tag/dartmouth-lake-sunapee/"
             },
             merrimackValley: {
                 name: "Merrimack Valley",
                 population: "58,6156",
-                povertyRate: "4.5"
+                povertyRate: "4.5",
+                topicPage: "http://stateimpact.npr.org/new-hampshire/tag/merrimack-valley/"
             },
             greatNorthWoods: {
                 name: "North Country",
                 population: "25,336",
-                povertyRate: "9.5"
+                povertyRate: "9.5",
+                topicPage: "http://stateimpact.npr.org/new-hampshire/tag/north-country/"
             },
             monadnock: {
                 name: "Monadnock Region",
                 population: "131,405",
-                povertyRate: "5.3"
+                povertyRate: "5.3",
+                topicPage: "http://stateimpact.npr.org/new-hampshire/tag/monadnock-region/"
             },
             seacoast: {
                 name: "Seacoast",
                 population: "223,562",
-                povertyRate: "4"
+                povertyRate: "4",
+                topicPage: "http://stateimpact.npr.org/new-hampshire/tag/seacoast/"
             }
         };
         this.map = Raphael(element, width, height);
@@ -155,8 +162,11 @@ SIG.profilesMap = {
             $('#population').html("<strong>Population</strong> " + this.regionInfo[boundary].population);
             $('#poverty').html("<strong>Families in Poverty</strong> " + this.regionInfo[boundary].povertyRate + "%");
             $('#ednote').html("<em>*Figures approximated</em>");
+            if (SIG.profilesPlaylist.isPlaying){
+                $('#topic-page').html("<a href='" + this.regionInfo[boundary].topicPage + "'>Topic page &raquo;</a>");
+            }
         } else {
-            $('#region, #population, #poverty, #ednote').text("");
+            $('.map p, #region').text("");
         }
         
     }

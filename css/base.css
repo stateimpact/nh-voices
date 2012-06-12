@@ -3096,6 +3096,10 @@ footer .partnership {
   font-size: 16px;
   color: #999999;
 }
+.map #topic-page {
+  font-size: 16px;
+  text-transform: uppercase;
+}
 .comments {
   -webkit-transition: opacity 0.5s ease-in-out;
   -moz-transition: opacity 0.5s ease-in-out;
