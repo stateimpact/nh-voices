@@ -216,9 +216,13 @@
     <script type="text/javascript">
 
     $(document).ready(function() {
-        var sidebars = $('.fixed').scrollToFixed({ 
+        var sidebarQuestions = $('.questions').scrollToFixed({ 
           marginTop:20, 
           limit: $('#comments').offset().top - $('.questions').outerHeight() - 80
+        });
+        var sidebarMap = $('.map').scrollToFixed({ 
+          marginTop:20, 
+          limit: $('#comments').offset().top - $('.map').outerHeight() - 80
         });
     });
 
