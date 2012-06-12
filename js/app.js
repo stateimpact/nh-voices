@@ -198,10 +198,10 @@ SIG.profilesPlaylist = {
             });
         });
         this.profileElements.each(function(index){
-            $(this).click(function(event){
-                targetProfile = parseInt($(this).attr('id').slice(-1) - 1, 10);
+            $(this).delegate("img","click",function(event){
+                targetProfile = parseInt($(this).parent().parent().attr('id').slice(-1) - 1, 10);
                 self.advancePlaylist(targetProfile,self.targetPlaylist);
-                event.isPropagationStopped();
+                event.stopPropagation();
                 event.preventDefault();
             });
             $(this).hover(
@@ -315,12 +315,11 @@ SIG.profilesPlaylist = {
         this.highlightedCard = this.cardElement;
         $(this.highlightedCard).find('.thumb-wrapper').append('<div class="loaded"><div class="progress"></div></div>');
         $(this.highlightedCard).find('.loaded').click(function(event){
-            var timeOffset = event.offsetX / 140 * self.soundObject.durationEstimate;
+            var clickOffset = event.pageX - $(this).offset().left;
+            var timeOffset = parseInt(clickOffset / 140 * self.soundObject.durationEstimate);
             self.soundObject.resume();
             self.soundObject.setPosition(timeOffset);
-            event.stopPropagation();
-            event.preventDefault();
-            console.log(event);
+            return false;
         });
     },
     scrollToCard: function(card){
