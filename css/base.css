@@ -3092,6 +3092,10 @@ footer .partnership {
   font-weight: 400;
   font-size: 14px;
 }
+.map #ednote {
+  font-size: 16px;
+  color: #999999;
+}
 .comments {
   -webkit-transition: opacity 0.5s ease-in-out;
   -moz-transition: opacity 0.5s ease-in-out;

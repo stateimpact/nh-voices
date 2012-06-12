@@ -154,8 +154,9 @@ SIG.profilesMap = {
             $('#region').text(this.regionInfo[boundary].name);
             $('#population').html("<strong>Population</strong> " + this.regionInfo[boundary].population);
             $('#poverty').html("<strong>Families in Poverty</strong> " + this.regionInfo[boundary].povertyRate + "%");
+            $('#ednote').html("<em>*Figures approximated</em>");
         } else {
-            $('#region, #population, #poverty').text("");
+            $('#region, #population, #poverty, #ednote').text("");
         }
         
     }
