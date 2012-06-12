@@ -3069,6 +3069,7 @@ footer .partnership {
 }
 .map {
   margin-left: 0;
+  min-height: 470px;
 }
 .map h2,
 .map p {
