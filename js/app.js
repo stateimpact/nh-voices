@@ -83,14 +83,8 @@ SIG.profilesMap = {
                     function(){
                         var cardElement = $(SIG.profilesPlaylist.profileElements[SIG.profilesPlaylist.data.regions.indexOf(region)]);
                         var scrollCard = cardElement;
-                        if ($(cardElement).attr('id').slice(-1) == 7){
-                            scrollCard = '#card4';
-                        }
                         if (!SIG.profilesPlaylist.isPlaying){
                             SIG.profilesPlaylist.fadeCards();
-                            $('html, body').animate({
-                                scrollTop: $(scrollCard).offset().top - 20
-                            }, 500);
                         }
                         cardElement.removeClass('inactive');
                         self.highlightBoundary(region);
