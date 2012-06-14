@@ -188,7 +188,7 @@ SIG.profilesPlaylist = {
         this.questionElements = $(element).find('li a');
         this.profileElements = $('.profile');
         this.questionElements.each(function(index){
-            $(this).click(function(event){
+            $(this).on("click touchstart", function(event){
                 var thisPlaylist = parseInt($(this).attr('data-playlist').slice(-1));
 
                 if(thisPlaylist !== self.targetPlaylist){
@@ -202,7 +202,7 @@ SIG.profilesPlaylist = {
             });
         });
         this.profileElements.each(function(index){
-            $(this).delegate("img","click",function(event){
+            $(this).delegate("img","click touchstart",function(event){
                 targetProfile = parseInt($(this).parent().parent().attr('id').slice(-1) - 1, 10);
                 self.advancePlaylist(targetProfile,self.targetPlaylist);
                 event.stopPropagation();
