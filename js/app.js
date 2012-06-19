@@ -244,7 +244,6 @@ SIG.profilesPlaylist = {
             console.log('playcard: ' + this.currentCard);
             console.log('playlist: ' + this.targetPlaylist);
             this.playCard(this.data.playlists[this.targetPlaylist][this.currentCard]);
-            this.highlightCard(this.currentCard);
         } else {
             this.clearPlaylist();
             this.isPlaying = false;
@@ -279,8 +278,21 @@ SIG.profilesPlaylist = {
         self.soundObject = this.soundManager.createSound({
             id:'mySound',
             url: "." + file,
+            autoLoad: true,
+            autoPlay: false,
+            onload: function(){
+                if(!this.duration||!this.durationEstimate){
+                    console.log('no duration available \n trying again');
+                    self.advancePlaylist.apply(self,[self.currentCard, self.targetPlaylist]);
+                } else {
+                    var duration = this.duration||this.durationEstimate;
+                    console.log('duration: ' + duration);
+                    this.play();
+                }
+            },
             onplay: function(){
                 self.fadeCards();
+                self.highlightCard(self.currentCard);
             },
             onfinish: function(){
                 self.currentCard++;
@@ -296,12 +308,12 @@ SIG.profilesPlaylist = {
                 $(self.playlistButton).find('i').attr('class','icon-pause');
             },
             whileplaying: function(){
-                var barWidth = Math.round(this.position/this.duration * 100) + '%';
+                var duration = this.duration||this.durationEstimate;
+                var barWidth = Math.round(this.position/duration * 100) + '%';
                 self.cardElement.find('.progress').width(barWidth);
             }
         });
         console.log(file);
-        self.soundObject.play();
     },
     fadeCards: function(){
         $('.profile').each(function(){
