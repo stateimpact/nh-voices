@@ -84,6 +84,7 @@
             if (base.options.bottom != -1) {
                 setFixed();
             }
+            setFixed();
         }
 
         // Returns whether the target element is fixed or not.
@@ -103,7 +104,6 @@
         // Sets the target element to fixed. Also, sets the spacer to fill the
         // void left by the target element.
         function setFixed() {
-            console.log(base.options.limit);
             // Only fix the target element and the spacer if we need to.
             if (!isFixed()) {
                 // Set the spacer to fill the height and width of the target
@@ -289,7 +289,9 @@
         }
 
         var windowScroll = function(event) {
-            checkScroll();
+            window.setTimeout(function(){
+                checkScroll();
+            }, 50);
         }
 
         // Initializes this plugin. Captures the options passed in, turns this

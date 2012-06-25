@@ -175,11 +175,11 @@ SIG.profilesPlaylist = {
     data: {
         regions: ['whiteMountains','lakes','dartmouthLakeSunapee','merrimackValley','greatNorthWoods','monadnock','seacoast'],
         playlists: [
-            ['wm_concern.mp3','lr_concern.mp3','ds_concern.mp3','steelydan.mp3','coltrane.mp3','michaeljackson.mp3','sc_concern.mp3'],
-            ['wm_recession.mp3','lr_recession.mp3','ds_recession.mp3','steelydan.mp3','coltrane.mp3','michaeljackson.mp3','sc_recession.mp3'],
-            ['wm_success.mp3','lr_success.mp3','ds_success.mp3','steelydan.mp3','coltrane.mp3','michaeljackson.mp3','sc_sucess.mp3'],
-            ['wm_govt.mp3','lr_govt.mp3','ds_govt.mp3','steelydan.mp3','coltrane.mp3','michaeljackson.mp3','sc_govt.mp3'],
-            ['wm_future.mp3','lr_future.mp3','ds_future.mp3','steelydan.mp3','coltrane.mp3','michaeljackson.mp3','sc_future.mp3']
+            ['steelydan.mp3','radiohead.mp3','toto.mp3','vh.mp3','coltrane.mp3','michaeljackson.mp3','jay.mp3'],
+            ['steelydan.mp3','radiohead.mp3','toto.mp3','vh.mp3','coltrane.mp3','michaeljackson.mp3','jay.mp3'],
+            ['steelydan.mp3','radiohead.mp3','toto.mp3','vh.mp3','coltrane.mp3','michaeljackson.mp3','jay.mp3'],
+            ['steelydan.mp3','radiohead.mp3','toto.mp3','vh.mp3','coltrane.mp3','michaeljackson.mp3','jay.mp3'],
+            ['steelydan.mp3','radiohead.mp3','toto.mp3','vh.mp3','coltrane.mp3','michaeljackson.mp3','jay.mp3']
         ]
     },
     init: function(element){
