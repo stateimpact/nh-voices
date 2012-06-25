@@ -310,7 +310,7 @@ SIG.profilesPlaylist = {
                 $(self.playlistButton).find('i').attr('class','icon-pause');
             },
             onsuspend: function(){
-                $(self.playlistButton).find('i').attr('class','icon-play');
+                //$(self.playlistButton).find('i').attr('class','icon-play');
             },
             whileplaying: function(){
                 var duration = this.duration||this.durationEstimate;
