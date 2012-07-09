@@ -3027,6 +3027,9 @@ footer .partnership {
 .profiles .profile dd {
   margin-left: 50px;
 }
+.profiles .profile p {
+  font: 400 13px/1.2 proxima-nova, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
 .profiles .profile .thumb-wrapper {
   position: relative;
   background: #000;
