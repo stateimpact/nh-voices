@@ -110,6 +110,7 @@ SIG.profilesMap = {
                     }
                 );
                 rg.click(function(){
+                	console.log('clicked region');
                     SIG.profilesPlaylist.advancePlaylist(SIG.profilesPlaylist.data.regions.indexOf(region), SIG.profilesPlaylist.targetPlaylist);
                     _gaq.push(['_trackEvent', self.trackingCategory, 'Playlist ' + 1 + ': Map region ' + region + ' : click']);
                 });
@@ -288,17 +289,7 @@ SIG.profilesPlaylist = {
             id:soundId,
             url: "./audio/" + file,
             autoLoad: true,
-            autoPlay: false,
-            onload: function(){
-                if(!this.duration||!this.durationEstimate){
-                    console.log('no duration available \n trying again');
-                    self.advancePlaylist.apply(self,[self.currentCard, self.targetPlaylist]);
-                } else {
-                    self.currentDuration = this.duration||this.durationEstimate;
-                    console.log('duration: ' + self.currentDuration);
-                    this.play(soundId);
-                }
-            },
+            autoPlay: true,
             onplay: function(){
                 $(self.playlistButton).find('i').attr('class','icon-pause');
             },
@@ -327,7 +318,6 @@ SIG.profilesPlaylist = {
         });
         self.fadeCards();
         self.highlightCard(self.currentCard);
-        self.soundObject.load();
         console.log(file);
     },
     fadeCards: function(){
