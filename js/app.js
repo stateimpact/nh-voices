@@ -116,7 +116,6 @@ SIG.profilesMap = {
                     }
                 );
                 $(rg[0]).click(function(){
-                    console.log('click');
                     SIG.profilesPlaylist.advancePlaylist(jQuery.inArray(region, SIG.profilesPlaylist.data.regions), SIG.profilesPlaylist.targetPlaylist);
                     _gaq.push(['_trackEvent', self.trackingCategory, 'Playlist ' + 1 + ': Map region ' + region + ' : click']);
                 });
@@ -213,7 +212,6 @@ SIG.profilesPlaylist = {
                     _gaq.push(['_trackEvent', self.trackingCategory, 'Playlist ' + thisPlaylist + ' : play']);
                 } else if (self.isPlaying && self.soundObject.readyState === 3) {
                     self.soundObject.togglePause.call(self);
-                    console.log('readyState: ' + self.soundObject.readyState);
                     _gaq.push(['_trackEvent', self.trackingCategory, 'Playlist ' + thisPlaylist + ' : pause']);
                 } else {
                     self.advancePlaylist(self.currentCard, thisPlaylist);
@@ -256,8 +254,6 @@ SIG.profilesPlaylist = {
         $(this.playlistButton).find('i').attr('class','icon-pause');
 
         if (this.currentCard < this.profileElements.length){
-            console.log('playcard: ' + this.currentCard);
-            console.log('playlist: ' + this.targetPlaylist);
             this.playCard(this.data.playlists[this.targetPlaylist][this.currentCard]);
         } else {
             this.clearPlaylist();
@@ -319,8 +315,6 @@ SIG.profilesPlaylist = {
         });
         self.fadeCards();
         self.highlightCard(self.currentCard);
-        //self.soundObject.load();
-        //console.log(file);
     },
     fadeCards: function(){
         $('.profile').each(function(){
