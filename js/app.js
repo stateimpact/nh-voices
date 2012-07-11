@@ -87,31 +87,37 @@ SIG.profilesMap = {
 
             (function(rg, region){
                 rg[0].style.cursor = "pointer";
+                rg.mouseovered = false;
                 rg.hover(
                     function(){
-                        var cardElement = $(SIG.profilesPlaylist.profileElements[SIG.profilesPlaylist.data.regions.indexOf(region)]);
+                        var cardElement = $(SIG.profilesPlaylist.profileElements[jQuery.inArray(region, SIG.profilesPlaylist.data.regions)]);
                         var scrollCard = cardElement;
                         if (!SIG.profilesPlaylist.isPlaying){
                             SIG.profilesPlaylist.fadeCards();
                         }
                         cardElement.removeClass('inactive');
-                        self.highlightBoundary(region);
+                        if(this.mouseovered === false){
+                            this.mouseovered = true;
+                            self.highlightBoundary(region);
+                        }
+                        
                     },
                     function(){
+                        this.mouseovered = false;
                         if (this != self.activeBoundary){
                             if (SIG.profilesPlaylist.isPlaying){
-                                $(SIG.profilesPlaylist.profileElements[SIG.profilesPlaylist.data.regions.indexOf(region)]).addClass('inactive');
+                                $(SIG.profilesPlaylist.profileElements[jQuery.inArray(region, SIG.profilesPlaylist.data.regions)]).addClass('inactive');
                             } else {
-                                $(SIG.profilesPlaylist.profileElements[SIG.profilesPlaylist.data.regions.indexOf(region)]).addClass('inactive');
+                                $(SIG.profilesPlaylist.profileElements[jQuery.inArray(region, SIG.profilesPlaylist.data.regions)]).addClass('inactive');
                                 SIG.profilesPlaylist.unfadeCards();
                             }
                             self.clearBoundary(region);
                         }
                     }
                 );
-                rg.click(function(){
-                	console.log('clicked region');
-                    SIG.profilesPlaylist.advancePlaylist(SIG.profilesPlaylist.data.regions.indexOf(region), SIG.profilesPlaylist.targetPlaylist);
+                $(rg[0]).click(function(){
+                    console.log('click');
+                    SIG.profilesPlaylist.advancePlaylist(jQuery.inArray(region, SIG.profilesPlaylist.data.regions), SIG.profilesPlaylist.targetPlaylist);
                     _gaq.push(['_trackEvent', self.trackingCategory, 'Playlist ' + 1 + ': Map region ' + region + ' : click']);
                 });
             })(this.nhRaphael[boundary], boundary);
@@ -151,7 +157,7 @@ SIG.profilesMap = {
             this.nhRaphael[boundary].animate({
                 "fill-opacity":".1",
                 "stroke":"#aaaaaa"
-            },500);
+            },500).toBack();
         }
         if (this.activeRegion){
             this.setMapInfo(this.activeRegion);
@@ -280,19 +286,16 @@ SIG.profilesPlaylist = {
     },
     playCard: function(file){
         var self = this;
-        var soundId = 'card' + self.targetPlaylist + self.currentCard;
+        //var soundId = 'card' + self.targetPlaylist + self.currentCard;
         self.isPlaying = true;
-        if (this.soundObject){
-            this.soundObject.unload();
+        if (self.soundObject){
+            self.soundObject.destruct();
         }
         self.soundObject = this.soundManager.createSound({
-            id:soundId,
+            id:"mySound",
             url: "./audio/" + file,
             autoLoad: true,
             autoPlay: true,
-            onplay: function(){
-                $(self.playlistButton).find('i').attr('class','icon-pause');
-            },
             onfinish: function(){
                 self.currentCard++;
                 self.advancePlaylist.apply(self,[self.currentCard, self.targetPlaylist]);
@@ -304,21 +307,20 @@ SIG.profilesPlaylist = {
             onpause: function(){
                 $(self.playlistButton).find('i').attr('class','icon-play');
             },
-            onresume: function(){
-                $(self.playlistButton).find('i').attr('class','icon-pause');
-            },
             onsuspend: function(){
-                //$(self.playlistButton).find('i').attr('class','icon-play');
+                $(self.playlistButton).find('i').attr('class','icon-play');
             },
             whileplaying: function(){
                 var duration = this.duration||this.durationEstimate;
                 var barWidth = Math.round(this.position/duration * 100) + '%';
                 self.cardElement.find('.progress').width(barWidth);
+                $(self.playlistButton).find('i').attr('class','icon-pause');
             }
         });
         self.fadeCards();
         self.highlightCard(self.currentCard);
-        console.log(file);
+        //self.soundObject.load();
+        //console.log(file);
     },
     fadeCards: function(){
         $('.profile').each(function(){
