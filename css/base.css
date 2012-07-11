@@ -3058,6 +3058,10 @@ footer .partnership {
 .profiles .profile .thumb-wrapper .progress {
   background: #bf3119;
   left: 0;
+  overflow: visible;
+  color: #ffffff;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 14px;
 }
 .profiles .profile.inactive {
   opacity: 0.3;

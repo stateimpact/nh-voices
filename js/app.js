@@ -96,7 +96,7 @@ SIG.profilesMap = {
                             SIG.profilesPlaylist.fadeCards();
                         }
                         cardElement.removeClass('inactive');
-                        if(this.mouseovered === false){
+                        if (this.mouseovered === false){
                             this.mouseovered = true;
                             self.highlightBoundary(region);
                         }
@@ -199,7 +199,6 @@ SIG.profilesPlaylist = {
         var self = this;
         this.soundManager = soundManager;
         this.soundManager.useHTML5Audio = true;
-        this.soundManager.preferFlash = false;
         this.soundManager.url = './swf/';
         this.questionElements = $(element).find('li a');
         this.profileElements = $('.profile');
@@ -207,13 +206,17 @@ SIG.profilesPlaylist = {
             $(this).on("click touchstart", function(event){
                 var thisPlaylist = parseInt($(this).attr('data-playlist').slice(-1));
 
-                if(thisPlaylist !== self.targetPlaylist){
+                if (thisPlaylist !== self.targetPlaylist){
                     self.advancePlaylist(0, thisPlaylist);
                     _gaq.push(['_trackEvent', self.trackingCategory, 'Playlist ' + thisPlaylist + ' : play']);
                 } else if (self.isPlaying && self.soundObject.readyState === 3) {
-                    self.soundObject.togglePause.call(self);
+                    if (self.suspended) {
+                        self.soundObject.play();
+                    } else {
+                        self.soundObject.togglePause.call(self);
+                    }
                     _gaq.push(['_trackEvent', self.trackingCategory, 'Playlist ' + thisPlaylist + ' : pause']);
-                } else {
+                } else  {
                     self.advancePlaylist(self.currentCard, thisPlaylist);
                     _gaq.push(['_trackEvent', self.trackingCategory, 'Playlist ' + thisPlaylist + ' : play']);
                 }
@@ -231,14 +234,14 @@ SIG.profilesPlaylist = {
             $(this).hover(
                 function(event){
                     SIG.profilesMap.highlightBoundary(self.data.regions[index]);
-                    if(!self.isPlaying){
+                    if (!self.isPlaying){
                         self.fadeCards();
                         $(this).removeClass('inactive');
                     }
                 },
                 function(event){
                     SIG.profilesMap.clearBoundary(self.data.regions[index]);
-                    if(!self.isPlaying){
+                    if (!self.isPlaying){
                         self.unfadeCards();
                     }
                 }
@@ -305,14 +308,28 @@ SIG.profilesPlaylist = {
             },
             onsuspend: function(){
                 $(self.playlistButton).find('i').attr('class','icon-play');
+                self.suspended = true;
+            },
+            onplay: function(){
+                self.suspended = false;
+            },
+            onresume: function(){
+                self.suspended = false;
             },
             whileplaying: function(){
                 var duration = this.duration||this.durationEstimate;
                 var barWidth = Math.round(this.position/duration * 100) + '%';
                 self.cardElement.find('.progress').width(barWidth);
+                //self.cardElement.find('.progress').text(Math.round(this.position/1000) + ":" + Math.round(duration/1000));
                 $(self.playlistButton).find('i').attr('class','icon-pause');
+                if (this.position === duration){
+                    this.play({
+                        position: duration
+                    });
+                }
             }
         });
+        
         self.fadeCards();
         self.highlightCard(self.currentCard);
     },
