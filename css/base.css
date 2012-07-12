@@ -2996,13 +2996,15 @@ footer .partnership {
 .profiles .profile {
   font-family: proxima-nova-extra-condensed, "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin-bottom: 18px;
-  -webkit-transition: opacity 0.5s ease-in-out;
-  -moz-transition: opacity 0.5s ease-in-out;
-  -ms-transition: opacity 0.5s ease-in-out;
-  -o-transition: opacity 0.5s ease-in-out;
-  transition: opacity 0.5s ease-in-out;
-  opacity: 1;
-  filter: alpha(opacity=100);
+}
+.profiles .profile h3,
+.profiles .profile p,
+.profiles .profile a {
+  -webkit-transition: color 0.5s ease-in-out;
+  -moz-transition: color 0.5s ease-in-out;
+  -ms-transition: color 0.5s ease-in-out;
+  -o-transition: color 0.5s ease-in-out;
+  transition: color 0.5s ease-in-out;
 }
 .profiles .profile h3 {
   font-size: 18px;
@@ -3032,9 +3034,16 @@ footer .partnership {
 }
 .profiles .profile .thumb-wrapper {
   position: relative;
-  background: #000;
+  background: #fff;
 }
 .profiles .profile .thumb-wrapper img {
+  -webkit-transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -ms-transition: opacity 0.5s ease-in-out;
+  -o-transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
+  opacity: 1;
+  filter: alpha(opacity=100);
   cursor: pointer;
 }
 .profiles .profile .thumb-wrapper .loaded,
@@ -3063,17 +3072,36 @@ footer .partnership {
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: 14px;
 }
-.profiles .profile.inactive {
+.profiles .profile.inactive img {
   opacity: 0.3;
   filter: alpha(opacity=30);
 }
-.profiles .profile.inactive .loaded {
+.profiles .profile.inactive p,
+.profiles .profile.inactive h3,
+.profiles .profile.inactive a {
+  color: #ccc;
+}
+.profiles .profile.inactive .loaded img {
   opacity: 0;
   filter: alpha(opacity=0);
 }
-.profiles .profile:hover {
+.profiles .profile.inactive .loaded p,
+.profiles .profile.inactive .loaded h3 {
+  color: #000;
+}
+.profiles .profile.inactive .loaded a {
+  color: #bf3119;
+}
+.profiles .profile:hover img {
   opacity: 1;
   filter: alpha(opacity=100);
+}
+.profiles .profile:hover p,
+.profiles .profile:hover h3 {
+  color: #000;
+}
+.profiles .profile:hover a {
+  color: #bf3119;
 }
 .map {
   margin-left: 0;

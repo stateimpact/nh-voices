@@ -37,8 +37,9 @@
 	.profile {
 		font-family: @condensedFontFamily;
 		margin-bottom: @baseLineHeight;
-		.transition(opacity .5s ease-in-out);
-		.opacity(100);
+		h3,p,a {
+			.transition(color .5s ease-in-out);
+		}
 		h3 { 
 			font-size: 18px;
 		}
@@ -64,8 +65,10 @@
 		}
 		.thumb-wrapper {
 			position: relative;
-			background: #000;
+			background: #fff;
 			img {
+				.transition(opacity .5s ease-in-out);
+				.opacity(100);
 				cursor: pointer;
 			}
 			.loaded,
@@ -90,14 +93,19 @@
 				font-size: 14px;
 			}
 		}
-		&.inactive{
-			.opacity(30);
+		&.inactive {
+			img { .opacity(30); }
+			p, h3, a { color: #ccc; }
 			.loaded {
-				.opacity(0);
+				img { .opacity(0); }
+				p, h3 { color: #000; }
+				a { color: @linkColor; }
 			}
 		}
 		&:hover {
-			.opacity(100);
+			img { .opacity(100); }
+			p, h3 { color: #000; }
+			a { color: @linkColor; }
 		}
 	}
 }
