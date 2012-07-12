@@ -292,7 +292,7 @@ SIG.profilesPlaylist = {
         }
         self.soundObject = this.soundManager.createSound({
             id:"mySound",
-            url: "./audio/" + file,
+            url: "./audio/" + file + "?v=1",
             autoLoad: true,
             autoPlay: true,
             onfinish: function(){
