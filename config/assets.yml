@@ -1,0 +1,12 @@
+package_assets:    on
+embed_assets:      off
+compress_assets:   on
+gzip_assets:       off
+
+javascripts:
+  app:
+    - js/jquery-scrolltofixed-min.js
+    - js/raphael.js
+    - js/map.js
+    - js/app.js
+    - js/soundmanager2.js
