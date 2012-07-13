@@ -188,11 +188,11 @@ SIG.profilesPlaylist = {
     data: {
         regions: ['whiteMountains','lakes','dartmouthLakeSunapee','merrimackValley','greatNorthWoods','monadnock','seacoast'],
         playlists: [
-            ['wm_concern.mp3','lr_concern.mp3','ds_concern.mp3','mm_concern.mp3','hi.mp3','hi.mp3','sc_concern.mp3'],
-            ['wm_recession.mp3','lr_recession.mp3','ds_recession.mp3','mm_recession.mp3','hi.mp3','hi.mp3','sc_recession.mp3'],
-            ['wm_success.mp3','lr_success.mp3','ds_success.mp3','mm_success.mp3','hi.mp3','hi.mp3','sc_success.mp3'],
-            ['wm_govt.mp3','lr_govt.mp3','ds_govt.mp3','mm_govt.mp3','hi.mp3','hi.mp3','sc_govt.mp3'],
-            ['wm_future.mp3','lr_future.mp3','ds_future.mp3','mm_future.mp3','hi.mp3','hi.mp3','sc_future.mp3']
+            ['wm_concern.mp3','lr_concern.mp3','ds_concern.mp3','mm_concern.mp3','nc_concern.mp3','csa_concern.mp3','sc_concern.mp3'],
+            ['wm_recession.mp3','lr_recession.mp3','ds_recession.mp3','mm_recession.mp3','nc_recession.mp3','csa_recession.mp3','sc_recession.mp3'],
+            ['wm_success.mp3','lr_success.mp3','ds_success.mp3','mm_success.mp3','nc_success.mp3','csa_success.mp3','sc_success.mp3'],
+            ['wm_govt.mp3','lr_govt.mp3','ds_govt.mp3','mm_govt.mp3','nc_govt.mp3','csa_govt.mp3','sc_govt.mp3'],
+            ['wm_future.mp3','lr_future.mp3','ds_future.mp3','mm_future.mp3','nc_future.mp3','csa_future.mp3','sc_future.mp3']
         ]
     },
     init: function(element){
