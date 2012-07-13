@@ -41,7 +41,7 @@ SIG.profilesMap = {
             },
             merrimackValley: {
                 name: "Merrimack Valley",
-                population: "58,6156",
+                population: "586,156",
                 povertyRate: "4.5",
                 unemploymentRate: "4.8",
                 topicPage: "http://stateimpact.npr.org/new-hampshire/tag/merrimack-valley/"
