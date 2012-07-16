@@ -2911,8 +2911,8 @@ a.badge:hover {
   color: #000000;
 }
 .intro h2 {
-  font-weight: 600;
-  color: #555555;
+  font-weight: 300;
+  color: #222222;
   line-height: 1.1;
   margin-bottom: 10px;
 }
