@@ -175,7 +175,7 @@ SIG.profilesMap = {
             $('#unemployment').html("<strong>Unemployment Rate</strong> " + this.regionInfo[boundary].unemploymentRate + "%");
             $('#ednote').html("<em>*Figures approximated</em>");
             if (SIG.profilesPlaylist.isPlaying){
-                $('#topic-page').html("<a href='" + this.regionInfo[boundary].topicPage + "'>More about " + this.regionInfo[boundary]['name'] + " &raquo;</a>");
+                $('#topic-page').html("<a href='" + this.regionInfo[boundary].topicPage + "'>More about " + this.regionInfo[boundary]['name'] + "&nbsp;&raquo;</a>");
             }
         } else {
             $('.map p, #region').text("");

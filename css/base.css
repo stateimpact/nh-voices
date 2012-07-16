@@ -3138,6 +3138,7 @@ footer .partnership {
   text-transform: uppercase;
 }
 .comments {
+  margin-top: 30px;
   -webkit-transition: opacity 0.5s ease-in-out;
   -moz-transition: opacity 0.5s ease-in-out;
   -ms-transition: opacity 0.5s ease-in-out;
