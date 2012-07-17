@@ -189,7 +189,7 @@ SIG.profilesPlaylist = {
     targetPlaylist: 0,
     trackingCategory: 'New Hampshire Voices',
     data: {
-        regions: ['whiteMountains','lakes','dartmouthLakeSunapee','merrimackValley','greatNorthWoods','monadnock','seacoast'],
+        regions: ['merrimackValley','lakes','greatNorthWoods','monadnock','dartmouthLakeSunapee','whiteMountains','seacoast'],
         playlists: [
             ['mm_concern.mp3','lr_concern.mp3','nc_concern.mp3','csa_concern.mp3','ds_concern.mp3','wm_concern.mp3','sc_concern.mp3'],
             ['mm_recession.mp3','lr_recession.mp3','nc_recession.mp3','csa_recession.mp3','ds_recession.mp3','wm_recession.mp3','sc_recession.mp3'],
